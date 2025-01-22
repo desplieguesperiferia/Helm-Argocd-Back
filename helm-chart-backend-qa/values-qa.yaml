@@ -1,0 +1,29 @@
+namespace: qa-periplay
+replicaCount: 2
+containerPort: 8080
+
+image:
+  repository: localhost:5000/qa-periplay-back
+  tag: qa-latest
+
+env:
+  DB_HOST: postgresql-service-qa
+  DB_PORT: "5432"
+  DB_NAME: periplaydb
+  DB_USER: periplayuser
+  POSTGRES_PASSWORD_SECRET: postgresql-secret
+
+resources:
+  requests:
+    memory: "1Gi"
+    cpu: "1"
+  limits:
+    memory: "1Gi"
+    cpu: "1"
+
+service:
+  name: backend-service
+  type: NodePort
+  port: 8080
+  targetPort: 8080
+  nodePort: 30010
