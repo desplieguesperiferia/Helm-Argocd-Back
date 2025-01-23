@@ -1,5 +1,5 @@
 namespace: qa-periplay
-replicaCount: 1
+replicaCount: 2
 containerPort: 8080
 
 podName: "qa-periplay-k8-backend-ms"  # Nuevo campo agregado
@@ -17,10 +17,10 @@ env:
 
 resources:
   requests:
-    memory: "2Gi"
+    memory: "1Gi"
     cpu: "1"
   limits:
-    memory: "2Gi"
+    memory: "1Gi"
     cpu: "1"
 
 service:
