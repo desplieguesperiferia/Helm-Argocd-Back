@@ -2,8 +2,6 @@ namespace: qa-periplay
 replicaCount: 2
 containerPort: 8080
 
-podName: qa-periplay-k8-backend-ms  # Nuevo campo agregado
-
 image:
   repository: localhost:5000/qa-periplay-back
   tag: qa-latest
