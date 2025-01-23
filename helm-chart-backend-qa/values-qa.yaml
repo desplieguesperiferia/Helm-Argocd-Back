@@ -22,7 +22,7 @@ resources:
     cpu: "1"
 
 service:
-  name: backend-service
+  name: backend-service-qa
   type: NodePort
   port: 8080
   targetPort: 8080
