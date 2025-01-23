@@ -1,5 +1,5 @@
 namespace: prod-periplay
-replicaCount: 3
+replicaCount: 2
 containerPort: 8080
 
 podName: "prod-periplay-k8-backend-ms"  # Nuevo campo agregado
