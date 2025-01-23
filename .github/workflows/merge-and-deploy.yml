@@ -11,7 +11,7 @@ jobs:
 
     steps:
       - name: Checkout code
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3  # Actualización a la versión v3
 
       - name: Configure Git
         run: |
@@ -21,9 +21,12 @@ jobs:
       - name: Checkout main branch
         run: git checkout main
 
+      - name: Pull latest main changes
+        run: git pull origin main  # Asegúrate de que main esté actualizado antes del merge
+
       - name: Merge qa into main
         run: |
-          git merge qa
+          git merge qa --no-ff -m "Merge qa into main"  # Asegura un merge explícito
           git push origin main
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # Necesario para hacer push al repositorio
@@ -34,7 +37,7 @@ jobs:
 
     steps:
       - name: Checkout code
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3  # Actualización a la versión v3
 
       - name: Set up Helm
         uses: azure/setup-helm@v1
