@@ -2,16 +2,18 @@ namespace: prod-periplay
 replicaCount: 3
 containerPort: 8080
 
+podName: "prod-periplay-k8-backend-ms"  # Nuevo campo agregado
+
 image:
-  repository: localhost:5000/prod-periplay-back
-  tag: prod-latest
+  repository: "localhost:5000/prod-periplay-back"
+  tag: "prod-latest"
 
 env:
-  DB_HOST: postgresql-service-prod
+  DB_HOST: "postgresql-service-prod"
   DB_PORT: "5432"
-  DB_NAME: periplaydb
-  DB_USER: periplayuser
-  POSTGRES_PASSWORD_SECRET: postgresql-secret
+  DB_NAME: "periplaydb"
+  DB_USER: "periplayuser"
+  POSTGRES_PASSWORD_SECRET: "postgresql-secret"
 
 resources:
   requests:
@@ -22,8 +24,8 @@ resources:
     cpu: "1"
 
 service:
-  name: backend-service-prod
-  type: NodePort
+  name: "backend-service-prod"
+  type: "NodePort"
   port: 8080
   targetPort: 8080
   nodePort: 30020
