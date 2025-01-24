@@ -44,5 +44,5 @@ jobs:
           kubeconfig: ${{ secrets.KUBECONFIG }}
       - name: Deploy with Helm
         run: >
-          helm upgrade --install periplay-backend .
+          helm upgrade --install periplay-backend ./helm-chart-backend-prod
           --namespace prod-periplay --values ./values-prod.yaml
