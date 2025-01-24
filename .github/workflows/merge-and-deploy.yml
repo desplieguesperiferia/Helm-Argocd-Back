@@ -1,5 +1,8 @@
 name: Merge QA to Main and Deploy to Production
 
+permissions:
+  contents: write  # Permisos necesarios para hacer git push
+
 on:
   push:
     branches:
@@ -11,7 +14,7 @@ jobs:
 
     steps:
       - name: Checkout code
-        uses: actions/checkout@v3  # Actualización a la versión v3
+        uses: actions/checkout@v3  # Última versión
 
       - name: Configure Git
         run: |
@@ -19,35 +22,37 @@ jobs:
           git config user.email "actions@github.com"
 
       - name: Checkout main branch
-        run: git checkout main
+        run: |
+          git fetch origin main
+          git checkout -b main origin/main
 
       - name: Pull latest main changes
-        run: git pull origin main  # Asegúrate de que main esté actualizado antes del merge
+        run: git pull origin main
 
       - name: Merge qa into main
         run: |
-          git merge qa --no-ff -m "Merge qa into main"  # Asegura un merge explícito
+          git merge qa --no-ff -m "Merge qa into main"
           git push origin main
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # Necesario para hacer push al repositorio
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
   deploy:
     runs-on: ubuntu-latest
-    needs: merge  # El trabajo de despliegue depende de que el merge sea exitoso
+    needs: merge  # El trabajo de despliegue depende del merge exitoso
 
     steps:
       - name: Checkout code
-        uses: actions/checkout@v3  # Actualización a la versión v3
+        uses: actions/checkout@v3
 
       - name: Set up Helm
         uses: azure/setup-helm@v1
         with:
-          helm-version: '3.x'  # Especifica la versión de Helm
+          helm-version: '3.x'
 
       - name: Set up Kubernetes
         uses: azure/setup-kubernetes@v1
         with:
-          kubeconfig: ${{ secrets.KUBECONFIG }}  # Usa tu kubeconfig guardado en GitHub Secrets
+          kubeconfig: ${{ secrets.KUBECONFIG }}
 
       - name: Deploy with Helm
         run: |
